@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud phonemod - Get Script Key</title>
+  <style>
+    :root {
+      --bg-color: #fcfbf7;
+      --card-bg: #ffffff;
+      --text-main: #333333;
+      --text-muted: #666666;
+      --accent-yellow: #f59e0b;
+      --discord-blue: #5865f2;
+      --tiktok-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #000000 100%);
+      --return-orange: #f97316;
+      --border-color: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 20px 12px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #00f2fe, #f59e0b, #9333ea);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 14px;
+      color: #111827;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .script-select-wrapper {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .script-select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-yellow);
+      background-color: #ffffff;
+      font-weight: 700;
+      color: #d97706;
+      font-size: 15px;
+      outline: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .task-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 24px 20px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .task-header {
+      text-align: center;
+    }
+
+    .task-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .task-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .task-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: 16px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .task-item:active {
+      transform: scale(0.98);
+    }
+
+    .task-discord {
+      background-color: var(--discord-blue);
+    }
+
+    .task-tiktok {
+      background: var(--tiktok-gradient);
+    }
+
+    .task-return {
+      background-color: var(--return-orange);
+    }
+
+    .task-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .task-btn {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .progress-section {
+      width: 100%;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background-color: #f3f4f6;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f59e0b, #10b981);
+      transition: width 0.3s ease;
+    }
+
+    .get-key-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      border: none;
+      background-color: #e5e7eb;
+      color: #9ca3af;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: not-allowed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .get-key-btn.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .coins-card {
+      background: #ffffff;
+      border: 2px solid #fef08a;
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .coins-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #b45309;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+
+    .coins-desc {
+      font-size: 13.5px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .coins-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      margin-top: 4px;
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+    }
+
+    .key-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .key-box {
+      background: #f3f4f6;
+      padding: 12px;
+      border-radius: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      margin: 15px 0;
+      text-align: left;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .copy-btn {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="brand-header">
+      <div class="avatar-wrapper">
+        <img class="avatar-img" src="https://raw.githubusercontent.com/tuananh2122/photos/main/1000008103.png" alt="Cloud phonemod">
+      </div>
+      <h1 class="brand-title">Cloud phonemod <span>⚡</span></h1>
+      
+      <div class="script-select-wrapper">
+        <select id="scriptSelector" class="script-select" onchange="updateSelectedScript()">
+          <option value="realkid_hub">Realkid Hub</option>
+          <option value="realkid_kaitun">Realkid Hub Kaitun</option>
+          <option value="teddy_hub">Teddy Hub</option>
+          <option value="teddy_kaitun">Teddyhub Kaitun</option>
+          <option value="quantum_onyx">Quantum Onyx</option>
+          <option value="bacon_hub">Bacon Hub</option>
+          <option value="steal_egg">Steal An Egg</option>
+          <option value="chilli_v7">Chilli Hub V7</option>
+          <option value="vxeze">Vxeze</option>
+          <option value="chullu">Chullu</option>
+          <option value="atras">Atras</option>
+          <option value="codium">Codium</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-title">📜 <span id="displayScriptName">Realkid Hub</span></div>
+        <p class="task-subtitle">Hoàn thành 3 nhiệm vụ bên dưới để nhận script</p>
+      </div>
+
+      <div class="task-list">
+        <a id="task1" class="task-item task-discord" href="https://discord.gg/GRZjdjdYr" target="_blank" onclick="startTask(1)">
+          <div class="task-info">
+            <span>💬 Tham gia Server Discord</span>
+          </div>
+          <span class="task-btn" id="btn-text-1">Bắt đầu</span>
+        </a>
+
+        <a id="task2" class="task-item task-tiktok" href="https://www.tiktok.com/@tunanhnguyn2122" target="_blank" onclick="startTask(2)">
+          <div class="task-info">
+            <span>🎵 Theo dõi TikTok</span>
+          </div>
+          <span class="task-btn" id="btn-text-2">Bắt đầu</span>
+        </a>
+
+        <a id="task3" class="task-item task-return" href="https://tuananhkey.lovable.app/" target="_blank" onclick="startTask(3)">
+          <div class="task-info">
+            <span>📺 Bấm vào đây rồi quay lại</span>
+          </div>
+          <span class="task-btn" id="btn-text-3">Bắt đầu</span>
+        </a>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-text">Tiến trình: <span id="completedCount">0</span>/3</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+      </div>
+
+      <button id="getKeyBtn" class="get-key-btn" onclick="showKeyModal()" disabled>
+        🔒 Hoàn thành để nhận script
+      </button>
+    </div>
+
+    <div class="coins-card">
+      <div class="coins-title">💎 Bạn muốn không làm nhiệm vụ?</div>
+      <p class="coins-desc">
+        Bạn hãy kiếm đủ <b>10 coins</b> ở discord sẽ không cần phải làm nhiệm vụ nữa!
+      </p>
+      <a href="https://discord.gg/GRZjdjdYr" target="_blank" class="coins-btn">
+        Vô server Discord để kiếm coins
+      </a>
+    </div>
+  </div>
+
+  <div id="keyModal" class="key-modal">
+    <div class="modal-content">
+      <h3 style="margin-bottom:10px;">🎉 Mã Script Của Bạn</h3>
+      <p style="font-size:13px; color:#666;">Copy mã bên dưới và dán vào Executor:</p>
+      <div id="scriptCodeDisplay" class="key-box"></div>
+      <button class="copy-btn" onclick="copyScriptCode()">Sao chép Script</button>
+    </div>
+  </div>
+
+  <script>
+    const scriptsData = {
+      realkid_hub: `getgenv().Key = ""\nloadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/main.lua"))()`,
+      realkid_kaitun: `loadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/kaitun.lua"))()`,
+      teddy_hub: `repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")\nloadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()`,
+      teddy_kaitun: `loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub-kaitunBF.lua"))()`,
+      quantum_onyx: `loadstring(game:HttpGet("https://raw.githubusercontent.com/flazh.gay/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()`,
+      bacon_hub: `getgenv().team = "Pirates" loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BaconHub/hack/refs/heads/main/Bloxfruits.lua"))()`,
+      steal_egg: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kairobloc/stealanegg/refs/heads/main/chillihubv7.lua"))()`,
+      chilli_v7: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kairobloc/stealanegg/refs/heads/main/chillihubv7.lua"))()`,
+      vxeze: `loadstring(game:HttpGet("https://gist.githubusercontent.com/angeryy-tvy/6a9ce750ddf5860230196ac468868fdb/raw/Steal-An-Egg-Vxeze"))()`,
+      chullu: `loadstring(game:HttpGet("https://raw.githubusercontent.com/napun87/stealaneggv2/refs/heads/main/chulluHub.lua"))()`,
+      atras: `loadstring(game:HttpGet("https://apexhubeditor.vercel.app/api/raw?name=Fzd4r3RpjLecu43Sh9eC09h5sUp2_deptrai"))()`,
+      codium: `loadstring(game:HttpGet("https://getcodium.xyz/loader.luau"))()`
+    };
+
+    let completedTasks = new Set();
+
+    function updateSelectedScript() {
+      const selector = document.getElementById("scriptSelector");
+      const selectedText = selector.options[selector.selectedIndex].text;
+      document.getElementById("displayScriptName").innerText = selectedText;
+    }
+
+    function startTask(taskId) {
+      if (completedTasks.has(taskId)) return;
+
+      const btnText = document.getElementById(`btn-text-${taskId}`);
+      let timeLeft = 30;
+      
+      btnText.innerText = `${timeLeft}s`;
+
+      const timer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          btnText.innerText = `${timeLeft}s`;
+        } else {
+          clearInterval(timer);
+          btnText.innerText = "✓ Hoàn thành";
+          completedTasks.add(taskId);
+          updateProgress();
+        }
+      }, 1000);
+    }
+
+    function updateProgress() {
+      const count = completedTasks.size;
+      document.getElementById("completedCount").innerText = count;
+      document.getElementById("progressBar").style.width = (count / 3 * 100) + "%";
+
+      if (count === 3) {
+        const getKeyBtn = document.getElementById("getKeyBtn");
+        getKeyBtn.classList.add("active");
+        getKeyBtn.removeAttribute("disabled");
+        getKeyBtn.innerHTML = "🔓 Nhận Script ngay";
+      }
+    }
+
+    function showKeyModal() {
+      const selector = document.getElementById("scriptSelector").value;
+      const code = scriptsData[selector] || "Code đang cập nhật...";
+      document.getElementById("scriptCodeDisplay").innerText = code;
+      document.getElementById("keyModal").style.display = "flex";
+    }
+
+    function copyScriptCode() {
+      const code = document.getElementById("scriptCodeDisplay").innerText;
+      navigator.clipboard.writeText(code);
+      alert("Đã sao chép mã Script thành công!");
+      document.getElementById("keyModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
