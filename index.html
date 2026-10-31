@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cloud phonemod - Get Script Key</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloud phonemod – Get Script Key</title>
   <style>
     :root {
       --bg-color: #fcfbf7;
@@ -11,10 +11,13 @@
       --text-main: #333333;
       --text-muted: #666666;
       --accent-yellow: #f59e0b;
+      --accent-yellow-deep: #d97706;
       --discord-blue: #5865f2;
-      --tiktok-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #000000 100%);
-      --return-orange: #f97316;
-      --border-color: #e5e7eb;
+      --tiktok-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #000 100%);
+      --return-purple: #8b5cf6;
+      --success-green: #10b981;
+      --coin-border: #fef3c7;
+      --coin-title: #b45309;
     }
 
     * {
@@ -22,6 +25,7 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -42,78 +46,72 @@
       gap: 20px;
     }
 
-    .brand-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* Header */
+    .header {
       text-align: center;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      padding: 5px;
-      background: linear-gradient(135deg, #00f2fe, #f59e0b, #9333ea);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .avatar-img {
       width: 100%;
-      height: 100%;
+    }
+
+    .avatar-ring {
+      display: inline-block;
+      padding: 5px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: block;
       object-fit: cover;
       background: #000;
     }
 
-    .brand-title {
+    .title {
+      margin-top: 14px;
       font-size: 24px;
       font-weight: 800;
-      margin-top: 14px;
-      color: #111827;
       letter-spacing: -0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .script-select-wrapper {
+    .select-wrapper {
       margin-top: 10px;
       width: 100%;
     }
 
-    .script-select {
+    select {
       width: 100%;
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 12px;
       border: 2px solid var(--accent-yellow);
-      background-color: #ffffff;
+      background-color: var(--card-bg);
+      color: var(--accent-yellow-deep);
       font-weight: 700;
-      color: #d97706;
       font-size: 15px;
       outline: none;
       cursor: pointer;
-      text-align: center;
+      text-align-last: center;
     }
 
-    .task-card {
+    /* Card */
+    .card {
       background: var(--card-bg);
       border-radius: 24px;
-      padding: 24px 20px;
+      padding: 20px;
       width: 100%;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 16px;
     }
 
-    .task-header {
+    .card-header {
       text-align: center;
     }
 
-    .task-title {
+    .script-title {
       font-size: 20px;
       font-weight: 700;
       color: var(--accent-yellow);
@@ -123,14 +121,14 @@
       gap: 8px;
     }
 
-    .task-subtitle {
+    .subtitle {
       font-size: 14px;
       color: var(--text-muted);
       margin-top: 4px;
     }
 
+    /* Tasks */
     .task-list {
-      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -142,33 +140,16 @@
       justify-content: space-between;
       padding: 12px 16px;
       border-radius: 16px;
-      color: white;
+      color: #fff;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      transition: transform 0.2s, opacity 0.2s;
+      transition: transform 0.1s;
+      cursor: pointer;
     }
 
     .task-item:active {
       transform: scale(0.98);
-    }
-
-    .task-discord {
-      background-color: var(--discord-blue);
-    }
-
-    .task-tiktok {
-      background: var(--tiktok-gradient);
-    }
-
-    .task-return {
-      background-color: var(--return-orange);
-    }
-
-    .task-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .task-btn {
@@ -176,26 +157,31 @@
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 12px;
+      font-weight: 600;
       backdrop-filter: blur(4px);
     }
 
+    .bg-discord { background-color: var(--discord-blue); }
+    .bg-tiktok { background: var(--tiktok-gradient); }
+    .bg-return { background-color: var(--return-purple); }
+
+    /* Progress */
     .progress-section {
-      width: 100%;
       text-align: center;
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .progress-text {
       font-size: 13px;
-      color: var(--text-muted);
       font-weight: 600;
+      color: var(--text-muted);
       margin-bottom: 8px;
     }
 
     .progress-bar-bg {
       width: 100%;
       height: 8px;
-      background-color: #f3f4f6;
+      background: #f3f4f6;
       border-radius: 10px;
       overflow: hidden;
     }
@@ -207,50 +193,42 @@
       transition: width 0.3s ease;
     }
 
-    .get-key-btn {
+    /* Action button */
+    .btn-action {
       width: 100%;
       padding: 14px;
       border-radius: 16px;
       border: none;
-      background-color: #e5e7eb;
-      color: #9ca3af;
-      font-weight: 700;
       font-size: 15px;
+      font-weight: 700;
       cursor: not-allowed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 8px;
+      background: #e5e7eb;
+      color: #9ca3af;
+      transition: all 0.2s;
     }
 
-    .get-key-btn.active {
+    .btn-action.active {
       background: linear-gradient(135deg, #10b981, #059669);
-      color: white;
+      color: #ffffff;
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
     }
 
+    /* Coins card */
     .coins-card {
-      background: #ffffff;
-      border: 2px solid #fef08a;
-      border-radius: 20px;
-      padding: 20px;
-      width: 100%;
+      border: 2px solid var(--coin-border);
       box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08);
-      display: flex;
-      flex-direction: column;
       gap: 12px;
     }
 
     .coins-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
-      color: #b45309;
+      color: var(--coin-title);
+      text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
+      gap: 6px;
     }
 
     .coins-desc {
@@ -259,64 +237,87 @@
       line-height: 1.5;
     }
 
-    .coins-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 14px;
-      border: none;
+    .btn-coins {
       background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-      color: white;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      text-align: center;
+      color: #fff;
       text-decoration: none;
-      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 700;
       margin-top: 4px;
       box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
     }
 
-    .key-modal {
-      display: none;
+    /* Modal */
+    .modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      z-index: 100;
+      z-index: 1000;
     }
 
-    .modal-content {
-      background: white;
-      border-radius: 20px;
+    .modal-box {
+      background: #ffffff;
+      border-radius: 24px;
       padding: 24px;
       width: 100%;
       max-width: 400px;
       text-align: center;
     }
 
-    .key-box {
-      background: #f3f4f6;
-      padding: 12px;
-      border-radius: 10px;
-      font-family: monospace;
-      font-size: 12px;
-      word-break: break-all;
-      margin: 15px 0;
-      text-align: left;
-      max-height: 150px;
-      overflow-y: auto;
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .copy-btn {
-      background: #10b981;
-      color: white;
+    .modal-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .code-box {
+      background: #f3f4f6;
+      border-radius: 12px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 12px;
+      text-align: left;
+      word-break: break-all;
+      max-height: 150px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      color: #1f2937;
+    }
+
+    .btn-copy {
+      width: 100%;
+      padding: 11px;
+      border-radius: 12px;
       border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
+      background: var(--success-green);
+      color: white;
       font-weight: 700;
+      font-size: 14px;
       cursor: pointer;
+    }
+
+    .btn-close {
+      margin-top: 8px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px;
       width: 100%;
     }
   </style>
@@ -324,161 +325,256 @@
 <body>
 
   <div class="container">
-    <div class="brand-header">
-      <div class="avatar-wrapper">
-        <img class="avatar-img" src="https://raw.githubusercontent.com/tuananh2122/photos/main/1000008103.png" alt="Cloud phonemod">
+    <!-- Header -->
+    <header class="header">
+      <div class="avatar-ring">
+        <img src="https://raw.githubusercontent.com/tuananh2122/photos/main/1000008103.png" alt="Cloud phonemod" class="avatar" />
       </div>
-      <h1 class="brand-title">Cloud phonemod <span>⚡</span></h1>
-      
-      <div class="script-select-wrapper">
-        <select id="scriptSelector" class="script-select" onchange="updateSelectedScript()">
-          <option value="realkid_hub">Realkid Hub</option>
-          <option value="realkid_kaitun">Realkid Hub Kaitun</option>
-          <option value="teddy_hub">Teddy Hub</option>
-          <option value="teddy_kaitun">Teddyhub Kaitun</option>
-          <option value="quantum_onyx">Quantum Onyx</option>
-          <option value="bacon_hub">Bacon Hub</option>
-          <option value="steal_egg">Steal An Egg</option>
-          <option value="chilli_v7">Chilli Hub V7</option>
-          <option value="vxeze">Vxeze</option>
-          <option value="chullu">Chullu</option>
-          <option value="atras">Atras</option>
-          <option value="codium">Codium</option>
-        </select>
-      </div>
-    </div>
+      <h1 class="title">Cloud phone&nbsp;mod ⚡</h1>
 
-    <div class="task-card">
-      <div class="task-header">
-        <div class="task-title">📜 <span id="displayScriptName">Realkid Hub</span></div>
-        <p class="task-subtitle">Hoàn thành 3 nhiệm vụ bên dưới để nhận script</p>
+      <div class="select-wrapper">
+        <select id="scriptSelect" onchange="handleScriptChange()"></select>
+      </div>
+    </header>
+
+    <!-- Task Card -->
+    <section class="card">
+      <div class="card-header">
+        <div class="script-title">
+          <span>📜</span>
+          <span id="selectedScriptLabel">Realkid Hub</span>
+        </div>
+        <p class="subtitle">Hoàn thành 3 nhiệm vụ bên dưới để nhận script</p>
       </div>
 
       <div class="task-list">
-        <a id="task1" class="task-item task-discord" href="https://discord.gg/GRZjdjdYr" target="_blank" onclick="startTask(1)">
-          <div class="task-info">
-            <span>💬 Tham gia Server Discord</span>
-          </div>
-          <span class="task-btn" id="btn-text-1">Bắt đầu</span>
+        <a id="task1" class="task-item bg-discord" href="https://discord.gg/A3aBbNzeg3" target="_blank" onclick="startTask(1, 30)">
+          <span>💬 Tham gia Server Discord</span>
+          <span class="task-btn" id="btnTask1">Bắt đầu</span>
         </a>
 
-        <a id="task2" class="task-item task-tiktok" href="https://www.tiktok.com/@tunanhnguyn2122" target="_blank" onclick="startTask(2)">
-          <div class="task-info">
-            <span>🎵 Theo dõi TikTok</span>
-          </div>
-          <span class="task-btn" id="btn-text-2">Bắt đầu</span>
+        <a id="task2" class="task-item bg-tiktok" href="https://www.tiktok.com/@tunanhnguyn2122" target="_blank" onclick="startTask(2, 30)">
+          <span>🎵 Theo dõi TikTok</span>
+          <span class="task-btn" id="btnTask2">Bắt đầu</span>
         </a>
 
-        <a id="task3" class="task-item task-return" href="https://tuananhkey.lovable.app/" target="_blank" onclick="startTask(3)">
-          <div class="task-info">
-            <span>📺 Bấm vào đây rồi quay lại</span>
-          </div>
-          <span class="task-btn" id="btn-text-3">Bắt đầu</span>
+        <a id="task3" class="task-item bg-return" href="https://tuananhkey.lovable.app/" target="_blank" onclick="startTask(3, 120)">
+          <span>📺 Bấm vào đây rồi quay lại</span>
+          <span class="task-btn" id="btnTask3">Bắt đầu</span>
         </a>
       </div>
 
       <div class="progress-section">
-        <div class="progress-text">Tiến trình: <span id="completedCount">0</span>/3</div>
+        <div class="progress-text" id="progressText">Tiến trình: 0/3</div>
         <div class="progress-bar-bg">
           <div class="progress-bar-fill" id="progressBar"></div>
         </div>
       </div>
 
-      <button id="getKeyBtn" class="get-key-btn" onclick="showKeyModal()" disabled>
+      <button id="btnAction" class="btn-action" disabled onclick="openKeyModal()">
         🔒 Hoàn thành để nhận script
       </button>
-    </div>
+    </section>
 
-    <div class="coins-card">
-      <div class="coins-title">💎 Bạn muốn không làm nhiệm vụ?</div>
+    <!-- Coins Card -->
+    <section class="card coins-card">
+      <div class="coins-title">
+        <span>💎</span> BẠN MUỐN KHÔNG CẦN LÀM NHIỆM VỤ?
+      </div>
       <p class="coins-desc">
         Bạn hãy kiếm đủ <b>10 coins</b> ở discord sẽ không cần phải làm nhiệm vụ nữa!
       </p>
-      <a href="https://discord.gg/GRZjdjdYr" target="_blank" class="coins-btn">
+      <a href="https://discord.gg/A3aBbNzeg3" target="_blank" class="btn-coins">
         Vô server Discord để kiếm coins
       </a>
-    </div>
+    </section>
   </div>
 
-  <div id="keyModal" class="key-modal">
-    <div class="modal-content">
-      <h3 style="margin-bottom:10px;">🎉 Mã Script Của Bạn</h3>
-      <p style="font-size:13px; color:#666;">Copy mã bên dưới và dán vào Executor:</p>
-      <div id="scriptCodeDisplay" class="key-box"></div>
-      <button class="copy-btn" onclick="copyScriptCode()">Sao chép Script</button>
+  <!-- Key Modal -->
+  <div class="modal-overlay" id="keyModal" onclick="closeKeyModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <h3 class="modal-title">🎉 Mã Script Của Bạn</h3>
+      <p class="modal-desc">Copy mã bên dưới và dán vào Executor:</p>
+      <div class="code-box" id="scriptCodeDisplay"></div>
+      <button class="btn-copy" id="btnCopy" onclick="copyScriptCode()">Sao chép Script</button>
+      <button class="btn-close" onclick="closeKeyModal()">Đóng</button>
     </div>
   </div>
 
   <script>
-    const scriptsData = {
-      realkid_hub: `getgenv().Key = ""\nloadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/main.lua"))()`,
-      realkid_kaitun: `loadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/kaitun.lua"))()`,
-      teddy_hub: `repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")\nloadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()`,
-      teddy_kaitun: `loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub-kaitunBF.lua"))()`,
-      quantum_onyx: `loadstring(game:HttpGet("https://raw.githubusercontent.com/flazh.gay/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()`,
-      bacon_hub: `getgenv().team = "Pirates" loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BaconHub/hack/refs/heads/main/Bloxfruits.lua"))()`,
-      steal_egg: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kairobloc/stealanegg/refs/heads/main/chillihubv7.lua"))()`,
-      chilli_v7: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kairobloc/stealanegg/refs/heads/main/chillihubv7.lua"))()`,
-      vxeze: `loadstring(game:HttpGet("https://gist.githubusercontent.com/angeryy-tvy/6a9ce750ddf5860230196ac468868fdb/raw/Steal-An-Egg-Vxeze"))()`,
-      chullu: `loadstring(game:HttpGet("https://raw.githubusercontent.com/napun87/stealaneggv2/refs/heads/main/chulluHub.lua"))()`,
-      atras: `loadstring(game:HttpGet("https://apexhubeditor.vercel.app/api/raw?name=Fzd4r3RpjLecu43Sh9eC09h5sUp2_deptrai"))()`,
-      codium: `loadstring(game:HttpGet("https://getcodium.xyz/loader.luau"))()`
-    };
+    const scripts = [
+      {
+        id: "realkid_hub",
+        label: "Realkid Hub",
+        code: `getgenv().Key = ""\nloadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/main.lua"))()`
+      },
+      {
+        id: "realkid_kaitun",
+        label: "Realkid Hub Kaitun",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/realkidhub/realkid/refs/heads/main/kaitun.lua"))()`
+      },
+      {
+        id: "teddy_hub",
+        label: "Teddy Hub",
+        code: `repeat task.wait() until game:IsLoaded() and game:GetService("Players") and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild("PlayerGui")\nloadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()`
+      },
+      {
+        id: "teddy_kaitun",
+        label: "Teddyhub Kaitun",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub-kaitunBF.lua"))()`
+      },
+      {
+        id: "quantum_onyx",
+        label: "Quantum Onyx",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/flazh.gay/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()`
+      },
+      {
+        id: "bacon_hub",
+        label: "Bacon Hub",
+        code: `getgenv().team = "Pirates" loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BaconHub/hack/refs/heads/main/Bloxfruits.lua"))()`
+      },
+      {
+        id: "redz_hub",
+        label: "Redz Hub",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/bloxfruitsnokey/Redz/refs/heads/main/Redz/loader.luau"))()`
+      },
+      {
+        id: "blue_x_hub",
+        label: "Blue x Hub",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()`
+      },
+      {
+        id: "chilli_v7",
+        label: "Chilli Hub V7",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kairobloc/stealanegg/refs/heads/main/chillihubv7.lua"))()`
+      },
+      {
+        id: "vxeze",
+        label: "Vxeze",
+        code: `loadstring(game:HttpGet("https://gist.githubusercontent.com/angeryy-tvy/6a9ce750ddf5860230196ac468868fdb/raw/Steal-An-Egg-Vxeze"))()`
+      },
+      {
+        id: "chullu",
+        label: "Chullu",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/napun87/stealaneggv2/refs/heads/main/chulluHub.lua"))()`
+      },
+      {
+        id: "atras",
+        label: "Atras",
+        code: `loadstring(game:HttpGet("https://apexhubeditor.vercel.app/api/raw?name=Fzd4r3RpjLecu43Sh9eC09h5sUp2_deptrai"))()`
+      },
+      {
+        id: "codium",
+        label: "Codium",
+        code: `loadstring(game:HttpGet("https://getcodium.xyz/loader.luau"))()`
+      },
+      {
+        id: "chilli_v5",
+        label: "Chilli Hub V5",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/ChilliV5BaKhi.lua"))()`
+      },
+      {
+        id: "lennon_hub",
+        label: "Lennon Hub",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/lennonxscripts/lennonfarmv2/refs/heads/main/stealanegg"))()`
+      },
+      {
+        id: "miranda_hub_kaitun",
+        label: "Miranda Hub Kaitun",
+        code: `loadstring(game:HttpGet("https://raw.githubusercontent.com/kadit9999/stealanegg/refs/heads/main/kaitunmirage.lua"))()`
+      }
+    ];
 
-    let completedTasks = new Set();
+    let taskStatus = { 1: "idle", 2: "idle", 3: "idle" };
+    let taskTimers = { 1: null, 2: null, 3: null };
 
-    function updateSelectedScript() {
-      const selector = document.getElementById("scriptSelector");
-      const selectedText = selector.options[selector.selectedIndex].text;
-      document.getElementById("displayScriptName").innerText = selectedText;
+    // Khởi tạo danh sách select
+    const select = document.getElementById("scriptSelect");
+    scripts.forEach((s) => {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.innerText = s.label;
+      select.appendChild(opt);
+    });
+
+    function resetTasks() {
+      // Hủy tất cả bộ đếm thời gian đang chạy
+      [1, 2, 3].forEach((id) => {
+        if (taskTimers[id]) {
+          clearInterval(taskTimers[id]);
+          taskTimers[id] = null;
+        }
+        taskStatus[id] = "idle";
+        document.getElementById(`btnTask${id}`).innerText = "Bắt đầu";
+      });
+
+      updateProgress();
+      closeKeyModal();
     }
 
-    function startTask(taskId) {
-      if (completedTasks.has(taskId)) return;
+    function handleScriptChange() {
+      const selected = scripts.find((s) => s.id === select.value) || scripts[0];
+      document.getElementById("selectedScriptLabel").innerText = selected.label;
+      resetTasks();
+    }
 
-      const btnText = document.getElementById(`btn-text-${taskId}`);
-      let timeLeft = 30;
-      
-      btnText.innerText = `${timeLeft}s`;
+    function startTask(id, duration) {
+      if (taskStatus[id] !== "idle") return;
 
-      const timer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          btnText.innerText = `${timeLeft}s`;
+      taskStatus[id] = "running";
+      let remaining = duration;
+      const btn = document.getElementById(`btnTask${id}`);
+      btn.innerText = remaining + "s";
+
+      taskTimers[id] = setInterval(() => {
+        remaining--;
+        if (remaining > 0) {
+          btn.innerText = remaining + "s";
         } else {
-          clearInterval(timer);
-          btnText.innerText = "✓ Hoàn thành";
-          completedTasks.add(taskId);
+          clearInterval(taskTimers[id]);
+          taskTimers[id] = null;
+          taskStatus[id] = "done";
+          btn.innerText = "✓ Hoàn thành";
           updateProgress();
         }
       }, 1000);
     }
 
     function updateProgress() {
-      const count = completedTasks.size;
-      document.getElementById("completedCount").innerText = count;
-      document.getElementById("progressBar").style.width = (count / 3 * 100) + "%";
+      const doneCount = Object.values(taskStatus).filter((s) => s === "done").length;
+      document.getElementById("progressText").innerText = `Tiến trình: ${doneCount}/3`;
+      document.getElementById("progressBar").style.width = (doneCount / 3) * 100 + "%";
 
-      if (count === 3) {
-        const getKeyBtn = document.getElementById("getKeyBtn");
-        getKeyBtn.classList.add("active");
-        getKeyBtn.removeAttribute("disabled");
-        getKeyBtn.innerHTML = "🔓 Nhận Script ngay";
+      const btnAction = document.getElementById("btnAction");
+      if (doneCount === 3) {
+        btnAction.disabled = false;
+        btnAction.classList.add("active");
+        btnAction.innerText = "🔓 Nhận Script ngay";
+      } else {
+        btnAction.disabled = true;
+        btnAction.classList.remove("active");
+        btnAction.innerText = "🔒 Hoàn thành để nhận script";
       }
     }
 
-    function showKeyModal() {
-      const selector = document.getElementById("scriptSelector").value;
-      const code = scriptsData[selector] || "Code đang cập nhật...";
-      document.getElementById("scriptCodeDisplay").innerText = code;
+    function openKeyModal() {
+      const selected = scripts.find((s) => s.id === select.value) || scripts[0];
+      document.getElementById("scriptCodeDisplay").innerText = selected.code;
+      document.getElementById("btnCopy").innerText = "Sao chép Script";
       document.getElementById("keyModal").style.display = "flex";
+    }
+
+    function closeKeyModal() {
+      document.getElementById("keyModal").style.display = "none";
     }
 
     function copyScriptCode() {
       const code = document.getElementById("scriptCodeDisplay").innerText;
-      navigator.clipboard.writeText(code);
-      alert("Đã sao chép mã Script thành công!");
-      document.getElementById("keyModal").style.display = "none";
+      navigator.clipboard.writeText(code).then(() => {
+        document.getElementById("btnCopy").innerText = "✓ Đã sao chép!";
+      }).catch(() => {
+        alert("Đã chọn mã script, bạn có thể copy thủ công!");
+      });
     }
   </script>
 </body>
